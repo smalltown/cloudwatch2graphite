@@ -9,7 +9,8 @@ cloudwatch.setRegion(global_options.region_name);
 var metrics = global_options.metrics_config.metrics
 
 for(index in metrics) {
-	getOneStat(metrics[index],global_options.region_name);
+	getOneStat(metrics[index], global_options.region_name);
+	//console.log("Session: %j \n", metrics[index]);
 }
 
 function getOneStat(metric,regionName) {
@@ -101,3 +102,4 @@ function getOneStat(metric,regionName) {
 		}
 	});
 }
+

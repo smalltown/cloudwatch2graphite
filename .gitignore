@@ -67,3 +67,9 @@ Desktop.ini
 ## security : avoid commiting sensitive files
 ############
 conf/*.json
+
+
+
+# Confidential config data
+credentials.json
+metrics.json
