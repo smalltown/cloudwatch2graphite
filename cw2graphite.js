@@ -1,5 +1,7 @@
+require('datejs');
+
 var dateFormat = require('dateformat');
-require('./lib/date');
+
 var global_options = require('./lib/options.js').readCmdOptions();
 
 var cloudwatch = require('aws2js').load('cloudwatch', global_options.credentials.accessKeyId, global_options.credentials.secretAccessKey);
@@ -14,7 +16,7 @@ for(index in metrics) {
 }
 
 function getOneStat(metric,regionName) {
-	var interval = 11;
+	var interval = 1440;
 
 	var now = new Date();
 	var then = (interval).minutes().ago()
@@ -82,11 +84,13 @@ function getOneStat(metric,regionName) {
 			return;
 		}
 
+                //console.log("Session: %j", memberObject);
+
 		var dataPoints;
 		if(memberObject.length === undefined) {
 			dataPoints = [memberObject];
 		} else {
-			// samples might not be sorted in chronological order
+			// samples might not be sorted in chronological orderi
 			dataPoints = memberObject.sort(function(m1,m2){
 				var d1 = new Date(m1.Timestamp), d2 = new Date(m2.Timestamp);
 				return d1 - d2
@@ -94,8 +98,9 @@ function getOneStat(metric,regionName) {
 		}
 		// Very often in Cloudwtch the last aggregated point is inaccurate and might be updated 1 or 2 minutes later
 		// this is not a problem if we choose to overwrite it into graphite, so we read the 3 last points.
+
 		if (dataPoints.length > global_options.metrics_config.numberOfOverlappingPoints) {
-			dataPoints = dataPoints.slice(dataPoints.length-global_options.metrics_config.numberOfOverlappingPoints, dataPoints.length);
+			dataPoints = dataPoints.slice(0, dataPoints.length);
 		}
 		for (var point in dataPoints) {
 			console.log("%s %s %s", metric.name, dataPoints[point][metric["Statistics.member.1"]], parseInt(new Date(dataPoints[point].Timestamp).getTime() / 1000.0));
