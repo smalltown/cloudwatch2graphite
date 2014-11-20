@@ -1,0 +1,13 @@
+{
+  "interval" : 1440,
+  "PeriodOthers" : 60,
+  "PeriodBilling" : 28800,
+  "Statistics" : "Sum",
+  "region" : "us-east-1",
+  "carbonNameSpacePrefix" : "cloudwatch",
+  "numberOfOverlappingPoints" : 3,
+  "Namespace": [
+    "PMAC",
+    "PMAC6"
+  ]
+}
