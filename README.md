@@ -3,8 +3,8 @@ AWS Cloudwatch2Graphite
 
 This application will output graphite counters for a list of AWS CloudWatch metrics. All you need to do is :
 
-* copy `conf/metrics.json.sample` into `conf/metrics.json`
-* copy `conf/credentials.json.sample` into `conf/credentials.json` and set up your `accessKeyId`, `secretAccessKey` and `region`.
+* Fill in AWS accessid and secretkey into the configuration config/credentials.json.
+* Modify the Namespace which you want to backup and other paramter related to CloudWatch in the configuration config/metric.json
 
 You'll find here the [reference](http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/CW_Support_For_AWS.html "Amazon AWS Cloudwatch reference to NameSpaces, metrics, units and dimensions") to NameSpaces, metrics, units and dimensions you'll want to refer to to set up your `metrics.json` (`metrics.json.sample` is a good starting point). Thus far this has been tested with EC2, ELB & DynamoDB.
 
@@ -15,20 +15,15 @@ typically, to test you should simply run:
 
 	node cw2graphite.js
 
-to test with all options:
-
-	node cw2graphite.js [--region region_name] [--credentials credentials_file] [--metrics metrics_file] | --help
-
-	region_name is the AWS region, ie. eu-west-1 (default : us-east-1)
-	credentials_file contains the AWS access key & secret key (default : ./conf/credentials.json)
-	metrics_file contains the metrics definition (defaults : ./conf/metrics.json)
 
 Pre-requisites
 --------------
 You'll need to install a few modules, including:
 * dateformat
+* datejs
 * aws2js
-* optparse
+* nconf
+
 
 	simply running this should do the job :
 	> npm install
